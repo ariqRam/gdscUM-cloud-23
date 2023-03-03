@@ -30,12 +30,14 @@
 }
 
 #logo-text {
+    font-family: 'Labrada', serif;
     font-size: 4rem;
 }
 
 #logo-slogan {
-    letter-spacing: 3px;
-    color: gray;
+    font-weight: bold;
+    letter-spacing: 2px;
+    color: #9AA8CD;
 }
 
 
@@ -101,4 +103,8 @@
 
 #expenses {
     flex: 1;
+}
+
+#expenses > img {
+    padding-top: 2rem;
 }
