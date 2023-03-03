@@ -1,40 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Starter</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <div id="">
 
-      <section id="profile">
-        <img src="profile.jpg" alt="Ariq Ramdhany" />
-        <!-- name -->
-        <h1 class="name">Ariq Ramdhany</h1> 
-        <!-- role -->
-        <p class="role">Business Analyst</p>
-        <p class="role">ramdhany@gmail.com</p>
-        <p class="role">Card Number</p>
-        <p class="role">Card Type (VISA)</p>
-        <!-- description -->
-        <p class="description">
-          A UM graduate who loves data analytics and product management. Aspired
-          to be a data analyst.
-        </p>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
 
-      </section>
-      <section id="expense">
-        <h1>Expense</h1>
-      </section>
-    </div>
-  </body>
+<body>
+  <div id="container">
+    <section id="sidebar">
+      <div id="sidebar-controller">
+        <div id="logo">
+          <h1 id="logo-text">ET</h1>
+          <p id="logo-slogan">EXPENSE TRACKER</p>
+        </div>
+        <div id="sidebar-menu">
+          <a active class="sidebar-link" href="#">Dashboard</a>
+          <a active class="sidebar-link" href="#something-else">Lorem Ipsum</a>
+        </div>
+      </div>
+    </section>
+    <section id="dashboard">
+      <div id="profile">
+        <img src="" alt="profile picture">
+        <div id="info">
+          <h1 id="name">Lim Jun Yi</h1>
+          <div id="location"><span id="state">Penang</span>, <span id="country">Malaysia</span></div>
+        </div>
+        <div id="socials">
+          <span>WA</span>
+          <span>Email</span>
+        </div>
+      </div>
+      <hr class="spacer">
+      <div id="expenses">
+        <h1>My Expenses</h1>
+        <img src="" alt="my expenses graph">
+      </div>
+    </section>
+  </div>
+</body>
+
 </html>

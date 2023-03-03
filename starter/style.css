@@ -1,46 +1,57 @@
 * {
-    font-family: 'Libre Baskerville', serif;
-}
-
-.name {
-    font-weight: 700;
-    font-size: large;
     margin: 0;
-    text-align: center;
-}
-
-.role {
-    color: #15616D;
-    font-size: small;
-    margin: 0;
-}
-
-.description{
-    color: #6B2737;
-    text-align: center;
-}
-
-#profile {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    border: 2px solid #15616D;
-    border-radius: 5px;
-    width: 400px;
-}
-
-#profile > img {
-    border-radius: 50%;
-    width: 70px;
+    font-family: 'Inter', sans-serif;
 }
 
 #container {
     display: flex;
-    direction: row;
-    gap: 10em;
 }
 
-svg {
-    fill: #15616D;
+#sidebar {
+    flex-basis: 18%;
+    height: 100vh;
+    position: sticky;
+    background-color: #DFF9FB;
+}
+
+#sidebar-controller {
+    display: flex;
+    flex-direction: column;
+    height: inherit;
+}
+
+#logo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-basis: 20%;
+    text-align: center;
+}
+
+#logo-text {
+    font-size: 4rem;
+}
+
+#logo-slogan {
+    letter-spacing: 3px;
+    color: gray;
+}
+
+.spacer {
+    margin: 10px;
+}
+
+#sidebar-menu {
+    flex-grow: 1;
+}
+
+.sidebar-link {
+    display: block;
+    text-decoration: none;
+    color: rgb(80, 80, 83);
+    padding-left: 2rem;
+}
+
+#dashboard {
+    flex-basis: 80%;
 }
