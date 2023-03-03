@@ -3,6 +3,10 @@
     font-family: 'Inter', sans-serif;
 }
 
+a {
+    text-decoration: none;
+}
+
 #container {
     display: flex;
 }
@@ -48,7 +52,6 @@
 
 .sidebar-link {
     display: block;
-    text-decoration: none;
     color: rgb(80, 80, 83);
     padding: 10px 2rem;
 }
