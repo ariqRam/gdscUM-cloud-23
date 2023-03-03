@@ -20,8 +20,7 @@
     text-align: center;
 }
 
-.profile {
-    margin: auto;
+#profile {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -31,9 +30,15 @@
     width: 400px;
 }
 
-.profile > img {
+#profile > img {
     border-radius: 50%;
     width: 70px;
+}
+
+#container {
+    display: flex;
+    direction: row;
+    gap: 10em;
 }
 
 svg {
