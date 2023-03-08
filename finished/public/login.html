@@ -1,40 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Input page</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="./style-login.css">
-</head>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./style-login.css" />
+    <script src="https://apis.google.com/js/api.js"></script>
+  </head>
 
-<body>
+  <body>
     <div id="container">
-        <section id="splash">
-            <div id="img-container">
-                <img src="./splash.png" alt="Splash Screen">
-            </div>
-        </section>
-        <form>
-            <input class="text-input" type="text" name="name" placeholder="Name">
-            <input class="text-input" type="text" name="email" placeholder="Email">
-            <input class="text-input" type="text" name="number" value="+60" placeholder="+60">
-            <label class="file">
-                Profile Picture |
-                <input type="file" id="file" aria-label="File browser example">
-            </label>
-            <div id="country-input">
-                <input class="text-input" type="text" name="state" placeholder="State">
-                <input class="text-input" type="text" name="country" placeholder="Country">
-            </div>
-            <input id="submit" type="submit" value="Submit">
-        </form>
-    </div>
-</body>
+      <section id="splash">
+        <div id="img-container">
+          <img src="./splash.png" alt="Splash Screen" />
+        </div>
+      </section>
+      <form
+        id="my-form"
+        method="POST"
+        action="https://script.google.com/macros/s/AKfycbzuOyoWNNGvxWWg7MJtpLhrwZob-SmKjmxi0bMbhG1s4COzyPgYjK00kmLtfe8D-MCd/exec"
+      >
+        <input
+          class="text-input"
+          name="Email"
+          type="email"
+          placeholder="Email"
+          required
+        />
+        <input
+          class="text-input"
+          name="Name"
+          type="text"
+          placeholder="Name"
+          required
+        />
+        <input
+          class="text-input"
+          name="Number"
+          type="text"
+          placeholder="Phone number"
+          required
+        />
+        <input
+          class="text-input"
+          name="State"
+          type="text"
+          placeholder="State"
+          required
+        />
+        <input
+          class="text-input"
+          name="Country"
+          type="text"
+          placeholder="Country"
+          required
+        />
 
+        <input type="file" id="file-input" />
+        <button id="upload-button">Upload Image</button>
+        <button type="submit" class="submit" id="submit">Submit</button>
+      </form>
+
+      <script>
+        // JS code for uploading image to google drive and store url to google sheets
+      </script>
+
+      <script src="postSuccess.js"></script>
+    </div>
+  </body>
 </html>
