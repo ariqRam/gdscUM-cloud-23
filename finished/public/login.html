@@ -1,78 +1,190 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Input page</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="./style-login.css" />
-    <script src="https://apis.google.com/js/api.js"></script>
-  </head>
 
-  <body>
-    <div id="container">
-      <section id="splash">
-        <div id="img-container">
-          <img src="./splash.png" alt="Splash Screen" />
-        </div>
-      </section>
-      <form
-        id="my-form"
-        method="POST"
-        action="https://script.google.com/macros/s/AKfycbzuOyoWNNGvxWWg7MJtpLhrwZob-SmKjmxi0bMbhG1s4COzyPgYjK00kmLtfe8D-MCd/exec"
-      >
-        <input
-          class="text-input"
-          name="Email"
-          type="email"
-          placeholder="Email"
-          required
-        />
-        <input
-          class="text-input"
-          name="Name"
-          type="text"
-          placeholder="Name"
-          required
-        />
-        <input
-          class="text-input"
-          name="Number"
-          type="text"
-          placeholder="Phone number"
-          required
-        />
-        <input
-          class="text-input"
-          name="State"
-          type="text"
-          placeholder="State"
-          required
-        />
-        <input
-          class="text-input"
-          name="Country"
-          type="text"
-          placeholder="Country"
-          required
-        />
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Input page</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="./style-login.css" />
+  <script src="https://apis.google.com/js/api.js"></script>
+</head>
 
-        <input type="file" id="file-input" />
-        <button id="upload-button">Upload Image</button>
-        <button type="submit" class="submit" id="submit">Submit</button>
-      </form>
+<body>
+  <div id="container">
+    <section id="splash">
+      <div id="img-container">
+        <img src="./splash.png" alt="Splash Screen" />
+      </div>
+    </section>
+    <form id="my-form" method="POST"
+      action="https://script.google.com/macros/s/AKfycbzuOyoWNNGvxWWg7MJtpLhrwZob-SmKjmxi0bMbhG1s4COzyPgYjK00kmLtfe8D-MCd/exec">
+      <input class="text-input" name="Email" type="email" placeholder="Email" required />
+      <input class="text-input" name="Name" type="text" placeholder="Name" required />
+      <input class="text-input" name="Number" type="text" placeholder="Phone number" required />
+      <input class="text-input" name="State" type="text" placeholder required />
+      <input class="text-input" name="Country" type="text" placeholder="Country" required />
 
-      <script>
-        // JS code for uploading image to google drive and store url to google sheets
-      </script>
+      <button type="button" id="authorize_button" onclick="handleAuthClick()">Upload Profile Picture</button>
+      <img id="profile-picture" src="" alt="Profile Picture" height="200">
+      <button type="submit" class="submit" id="submit">Submit</button>
+    </form>
 
-      <script src="postSuccess.js"></script>
-    </div>
-  </body>
+    <!-- <script src="./googlePicker.js">
+        // AIzaSyDFan7V1_MKMjJcZ1uAU47kXovI-jBHxPY
+      </script> -->
+    <script type="text/javascript">
+      /* exported gapiLoaded */
+      /* exported gisLoaded */
+      /* exported handleAuthClick */
+      /* exported handleSignoutClick */
+
+      // Authorization scopes required by the API; multiple scopes can be
+      // included, separated by spaces.
+      const SCOPES = 'https://www.googleapis.com/auth/drive';
+
+      // TODO(developer): Set to client ID and API key from the Developer Console
+      const CLIENT_ID = '507701161714-qh4hpbbhv565c7r8ni4fa71dnr93ga0d.apps.googleusercontent.com';
+      const API_KEY = 'AIzaSyDFan7V1_MKMjJcZ1uAU47kXovI-jBHxPY';
+
+      // TODO(developer): Replace with your own project number from console.developers.google.com.
+      const APP_ID = '507701161714';
+
+      let tokenClient;
+      let accessToken = null;
+      let pickerInited = false;
+      let gisInited = false;
+
+
+      document.getElementById('authorize_button').style.visibility = 'hidden';
+      // document.getElementById('signout_button').style.visibility = 'hidden';
+
+      /**
+       * Callback after api.js is loaded.
+       */
+      function gapiLoaded() {
+        gapi.load('client:picker', initializePicker);
+      }
+
+      /**
+       * Callback after the API client is loaded. Loads the
+       * discovery doc to initialize the API.
+       */
+      async function initializePicker() {
+        await gapi.client.load('https://www.googleapis.com/discovery/v1/apis/drive/v3/rest');
+        pickerInited = true;
+        maybeEnableButtons();
+      }
+
+      /**
+       * Callback after Google Identity Services are loaded.
+       */
+      function gisLoaded() {
+        tokenClient = google.accounts.oauth2.initTokenClient({
+          client_id: CLIENT_ID,
+          scope: SCOPES,
+          callback: '', // defined later
+        });
+        gisInited = true;
+        maybeEnableButtons();
+      }
+
+      /**
+       * Enables user interaction after all libraries are loaded.
+       */
+      function maybeEnableButtons() {
+        if (pickerInited && gisInited) {
+          document.getElementById('authorize_button').style.visibility = 'visible';
+        }
+      }
+
+      /**
+       *  Sign in the user upon button click.
+       */
+      function handleAuthClick() {
+        tokenClient.callback = async (response) => {
+          if (response.error !== undefined) {
+            throw (response);
+          }
+          accessToken = response.access_token;
+          // document.getElementById('signout_button').style.visibility = 'visible';
+          document.getElementById('authorize_button').innerText = 'Refresh';
+          await createPicker();
+        };
+
+        if (accessToken === null) {
+          // Prompt the user to select a Google Account and ask for consent to share their data
+          // when establishing a new session.
+          tokenClient.requestAccessToken({ prompt: 'consent' });
+        } else {
+          // Skip display of account chooser and consent dialog for an existing session.
+          tokenClient.requestAccessToken({ prompt: '' });
+        }
+      }
+
+      /**
+       *  Sign out the user upon button click.
+       */
+      function handleSignoutClick() {
+        if (accessToken) {
+          accessToken = null;
+          google.accounts.oauth2.revoke(accessToken);
+          document.getElementById('content').innerText = '';
+          document.getElementById('authorize_button').innerText = 'Authorize';
+          // document.getElementById('signout_button').style.visibility = 'hidden';
+        }
+      }
+
+      /**
+       *  Create and render a Picker object for searching images.
+       */
+      function createPicker() {
+        const view = new google.picker.View(google.picker.ViewId.DOCS);
+        view.setMimeTypes('image/png,image/jpeg,image/jpg');
+        const picker = new google.picker.PickerBuilder()
+          .enableFeature(google.picker.Feature.NAV_HIDDEN)
+          .enableFeature(google.picker.Feature.MULTISELECT_ENABLED)
+          .setDeveloperKey(API_KEY)
+          .setAppId(APP_ID)
+          .setOAuthToken(accessToken)
+          .addView(view)
+          .addView(new google.picker.DocsUploadView())
+          .setCallback(pickerCallback)
+          .build();
+        picker.setVisible(true);
+      }
+
+      /**
+       * Displays the file details of the user's selection.
+       * @param {object} data - Containers the user selection from the picker
+       */
+      async function pickerCallback(data) {
+        if (data.action === google.picker.Action.PICKED) {
+          let text = `Picker response: \n${JSON.stringify(data, null, 2)}\n`;
+          const document = data[google.picker.Response.DOCUMENTS][0];
+          const fileId = document[google.picker.Document.ID];
+          console.log(fileId);
+          gapi.client.drive.permissions.create({
+            'fileId': fileId,
+            'role': 'reader',
+            'type': 'anyone'
+          })
+            .then((success) => {
+              console.log(success)
+            })
+          window.document.getElementById("profile-picture").src = `https://drive.google.com/uc?export=view&id=${fileId}`
+          // text += `Drive API response for first document: \n${JSON.stringify(res.url, null, 2)}\n`;
+        }
+      }
+    </script>
+    <script async defer src="https://apis.google.com/js/api.js" onload="gapiLoaded()"></script>
+    <script async defer src="https://accounts.google.com/gsi/client" onload="gisLoaded()"></script>
+    <!-- <script src="postSuccess.js"></script> -->
+  </div>
+</body>
+
 </html>

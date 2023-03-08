@@ -6,7 +6,7 @@
   display: flex;
   margin: auto;
   margin-top: 5rem;
-  height: 35rem;
+  height: fit-content;
   max-width: 70rem;
   border-radius: 10px;
   box-shadow: 0px 0px 20px 20px rgba(92, 92, 92, 0.25);
