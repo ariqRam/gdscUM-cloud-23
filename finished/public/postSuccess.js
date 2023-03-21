@@ -72,7 +72,7 @@ function handleAuthClick() {
     }
     accessToken = response.access_token;
     // document.getElementById('signout_button').style.visibility = 'visible';
-    document.getElementById('authorize_button').innerText = 'Refresh';
+    document.getElementById('authorize_button').innerText = 'Change Selected Picture';
     await createPicker();
   };
 
